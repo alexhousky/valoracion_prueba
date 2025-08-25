@@ -1,48 +1,27 @@
 package com.example.fidelidad_api.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "fidelizacion")
+@Getter
+@Setter
 public class Fidelizacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_fidelizacion")
-    private Long idFidelizacion;
+    private Integer idFidelizacion;
 
     @ManyToOne
-    @JoinColumn(name = "cliente", nullable = false)
+    @JoinColumn(name = "cliente", referencedColumnName = "id_clientes")
     private Cliente cliente;
 
     @ManyToOne
-    @JoinColumn(name = "marca", nullable = false)
+    @JoinColumn(name = "marca", referencedColumnName = "id_marcas")
     private Marca marca;
-
-    // Getters y Setters
-
-    public Long getIdFidelizacion() {
-        return idFidelizacion;
-    }
-
-    public void setIdFidelizacion(Long idFidelizacion) {
-        this.idFidelizacion = idFidelizacion;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Marca getMarca() {
-        return marca;
-    }
-
-    public void setMarca(Marca marca) {
-        this.marca = marca;
-    }
 }
+
 

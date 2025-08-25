@@ -1,23 +1,17 @@
 package com.example.fidelidad_api.service;
 
 import com.example.fidelidad_api.entity.TipoIdentificacion;
-import com.example.fidelidad_api.repository.TipoIdentificacionRepository;
-import org.springframework.stereotype.Service;
+
 import java.util.List;
+import java.util.Optional;
 
+public interface TipoIdentificacionService {
 
-@Service
-public class TipoIdentificacionService {
+    List<TipoIdentificacion> findAll();
 
-    private final TipoIdentificacionRepository tipoIdentificacionRepository;
+    Optional<TipoIdentificacion> findById(Long id);
 
-    public TipoIdentificacionService(TipoIdentificacionRepository tipoIdentificacionRepository) {
-        this.tipoIdentificacionRepository = tipoIdentificacionRepository;
-    }
+    TipoIdentificacion save(TipoIdentificacion tipoIdentificacion);
 
-    public List<TipoIdentificacion> listarTipos() {
-        return tipoIdentificacionRepository.findAll();
-    }
+    void deleteById(Long id);
 }
-
-

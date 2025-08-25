@@ -18,30 +18,39 @@ public class MarcaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Marca>> listar() {
-        return ResponseEntity.ok(marcaService.listarMarcas());
+    public List<Marca> getAll() {
+        return marcaService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Marca> obtenerPorId(@PathVariable Long id) {
-        return marcaService.buscarPorId(id)
+    public ResponseEntity<Marca> getById(@PathVariable Long id) {
+        return marcaService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    // Si quieres dejar CRUD abierto:
     @PostMapping
-    public ResponseEntity<Marca> crear(@RequestBody Marca marca) {
-        return ResponseEntity.ok(marcaService.crearMarca(marca));
+    public Marca create(@RequestBody Marca marca) {
+        return marcaService.save(marca);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Marca> actualizar(@PathVariable Long id, @RequestBody Marca marca) {
-        return ResponseEntity.ok(marcaService.actualizarMarca(id, marca));
+    public ResponseEntity<Marca> update(@PathVariable Long id, @RequestBody Marca marca) {
+        return marcaService.findById(id)
+                .map(existing -> {
+                    existing.setNombre(marca.getNombre());
+                    return ResponseEntity.ok(marcaService.save(existing));
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        marcaService.eliminarMarca(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        if (marcaService.findById(id).isPresent()) {
+            marcaService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
