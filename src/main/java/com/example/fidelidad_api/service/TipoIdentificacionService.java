@@ -1,7 +1,10 @@
 package com.example.fidelidad_api.service;
 
+import com.example.fidelidad_api.entity.TipoIdentificacion;
+import com.example.fidelidad_api.repository.TipoIdentificacionRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+
 
 @Service
 public class TipoIdentificacionService {
