@@ -18,22 +18,29 @@ public class TipoIdentificacionServiceImpl implements TipoIdentificacionService 
     }
 
     @Override
-    public List<TipoIdentificacion> findAll() {
+    public List<TipoIdentificacion> getAll() {
         return tipoIdentificacionRepository.findAll();
     }
 
     @Override
-    public Optional<TipoIdentificacion> findById(Long id) {
-        return tipoIdentificacionRepository.findById(id);
+    public TipoIdentificacion getById(Long id) {  // ✅ Aquí lo implementamos
+        Optional<TipoIdentificacion> result = tipoIdentificacionRepository.findById(id);
+        return result.orElse(null);
     }
 
     @Override
-    public TipoIdentificacion save(TipoIdentificacion tipoIdentificacion) {
+    public TipoIdentificacion create(TipoIdentificacion tipoIdentificacion) {
         return tipoIdentificacionRepository.save(tipoIdentificacion);
     }
 
     @Override
-    public void deleteById(Long id) {
+    public TipoIdentificacion update(TipoIdentificacion tipoIdentificacion) {
+        return tipoIdentificacionRepository.save(tipoIdentificacion);
+    }
+
+    @Override
+    public void delete(Long id) {
         tipoIdentificacionRepository.deleteById(id);
     }
 }
+

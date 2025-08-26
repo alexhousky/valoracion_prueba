@@ -37,3 +37,4 @@ public class FidelizacionServiceImpl implements FidelizacionService {
         fidelizacionRepository.deleteById(id);
     }
 }
+

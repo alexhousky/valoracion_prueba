@@ -2,7 +2,6 @@ package com.example.fidelidad_api.controller;
 
 import com.example.fidelidad_api.entity.TipoIdentificacion;
 import com.example.fidelidad_api.service.TipoIdentificacionService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,38 +18,32 @@ public class TipoIdentificacionController {
 
     @GetMapping
     public List<TipoIdentificacion> getAll() {
-        return tipoIdentificacionService.findAll();
+        return tipoIdentificacionService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TipoIdentificacion> getById(@PathVariable Long id) {
-        return tipoIdentificacionService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public TipoIdentificacion getById(@PathVariable Long id) {
+        return tipoIdentificacionService.getById(id);
     }
 
-    // Opción: si quieres mantener el catálogo fijo, puedes deshabilitar POST/PUT/DELETE
     @PostMapping
     public TipoIdentificacion create(@RequestBody TipoIdentificacion tipoIdentificacion) {
-        return tipoIdentificacionService.save(tipoIdentificacion);
+        return tipoIdentificacionService.create(tipoIdentificacion);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TipoIdentificacion> update(@PathVariable Long id, @RequestBody TipoIdentificacion tipoIdentificacion) {
-        return tipoIdentificacionService.findById(id)
-                .map(existing -> {
-                    existing.setNombre(tipoIdentificacion.getNombre());
-                    return ResponseEntity.ok(tipoIdentificacionService.save(existing));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public TipoIdentificacion update(@PathVariable Long id, @RequestBody TipoIdentificacion tipoIdentificacion) {
+        TipoIdentificacion existing = tipoIdentificacionService.getById(id);
+        if (existing != null) {
+            existing.setNombre(tipoIdentificacion.getNombre()); // ✅ aquí usamos el setter manual
+            return tipoIdentificacionService.update(existing);
+        }
+        return null;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (tipoIdentificacionService.findById(id).isPresent()) {
-            tipoIdentificacionService.deleteById(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+    public void delete(@PathVariable Long id) {
+        tipoIdentificacionService.delete(id);
     }
 }
+

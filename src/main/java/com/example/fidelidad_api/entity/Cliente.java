@@ -1,47 +1,67 @@
 package com.example.fidelidad_api.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.time.LocalDate;
 
 @Entity
-@Table(name = "clientes")
-@Getter
-@Setter
+@Table(name = "cliente")
 public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_clientes")
-    private Integer idClientes;
+    private Long id;   // PK en la tabla cliente
 
+    private String nombre;
+
+    // Relación con TipoIdentificacion
     @ManyToOne
-    @JoinColumn(name = "id_identificacion", referencedColumnName = "id_identificacion")
+    @JoinColumn(name = "id_identificacion", referencedColumnName = "id")
     private TipoIdentificacion tipoIdentificacion;
 
-    @Column(name = "numero_identificacion", nullable = false, unique = true, length = 20)
-    private String numeroIdentificacion;
+    // Otros campos opcionales de cliente
+    private String correo;
+    private String telefono;
 
-    @Column(name = "nombres", nullable = false, length = 100)
-    private String nombres;
+    // Getters y Setters
+    public Long getId() {
+        return id;
+    }
 
-    @Column(name = "apellidos", nullable = false, length = 100)
-    private String apellidos;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    @Column(name = "fecha_nacimiento", nullable = false)
-    private LocalDate fechaNacimiento;
+    public String getNombre() {
+        return nombre;
+    }
 
-    @Column(name = "direccion", nullable = false, length = 200)
-    private String direccion;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "ciudad_id", referencedColumnName = "id_ciudad")
-    private Ciudad ciudad;
+    public TipoIdentificacion getTipoIdentificacion() {
+        return tipoIdentificacion;
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "marca_id", referencedColumnName = "id_marcas")
-    private Marca marca;
+    public void setTipoIdentificacion(TipoIdentificacion tipoIdentificacion) {
+        this.tipoIdentificacion = tipoIdentificacion;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 }
+
+
 

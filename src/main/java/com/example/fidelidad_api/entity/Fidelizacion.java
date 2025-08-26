@@ -6,22 +6,48 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "fidelizacion")
-@Getter
-@Setter
 public class Fidelizacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_fidelizacion")
-    private Integer idFidelizacion;
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "cliente", referencedColumnName = "id_clientes")
-    private Cliente cliente;
+    private String cliente;
+    private String marca;
 
-    @ManyToOne
-    @JoinColumn(name = "marca", referencedColumnName = "id_marcas")
-    private Marca marca;
+    private String estado;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 }
 
 

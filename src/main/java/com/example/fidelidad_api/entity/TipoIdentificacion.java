@@ -1,37 +1,33 @@
 package com.example.fidelidad_api.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "tipo_identificacion")
-@Data
 public class TipoIdentificacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_identificacion")
-    private Integer idIdentificacion;
+    private Long id;   // PK en la tabla tipo_identificacion
 
-    @Column(name = "nombre_identificacion", nullable = false, length = 100)
-    private String nombreIdentificacion;
+    private String nombre;
 
-    public Integer getIdIdentificacion() {
-        return idIdentificacion;
+    // Getters y Setters
+    public Long getId() {
+        return id;
     }
 
-    public void setIdIdentificacion(Integer idIdentificacion) {
-        this.idIdentificacion = idIdentificacion;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getNombreIdentificacion() {
-        return nombreIdentificacion;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreIdentificacion(String nombreIdentificacion) {
-        this.nombreIdentificacion = nombreIdentificacion;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 }
+
 

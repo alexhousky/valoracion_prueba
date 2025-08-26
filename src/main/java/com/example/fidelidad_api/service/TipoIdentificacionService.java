@@ -1,17 +1,13 @@
 package com.example.fidelidad_api.service;
 
 import com.example.fidelidad_api.entity.TipoIdentificacion;
-
 import java.util.List;
-import java.util.Optional;
 
 public interface TipoIdentificacionService {
-
-    List<TipoIdentificacion> findAll();
-
-    Optional<TipoIdentificacion> findById(Long id);
-
-    TipoIdentificacion save(TipoIdentificacion tipoIdentificacion);
-
-    void deleteById(Long id);
+    List<TipoIdentificacion> getAll();
+    TipoIdentificacion getById(Long id);  // <-- Falta este
+    TipoIdentificacion create(TipoIdentificacion tipoIdentificacion);
+    TipoIdentificacion update(TipoIdentificacion tipoIdentificacion);
+    void delete(Long id);
 }
+
