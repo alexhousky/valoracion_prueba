@@ -2,23 +2,23 @@ package com.example.fidelidad_api.services;
 
 import com.example.fidelidad_api.models.Departamento;
 import com.example.fidelidad_api.repositories.DepartamentoRepositorio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class DepartamentoServicio {
-    private final DepartamentoRepositorio departamentoRepositorio;
 
-    public DepartamentoServicio(DepartamentoRepositorio departamentoRepositorio) {
-        this.departamentoRepositorio = departamentoRepositorio;
-    }
+    @Autowired
+    private DepartamentoRepositorio departamentoRepositorio;
 
-    public List<Departamento> listarDepartamentos() {
+    public List<Departamento> listarTodos() {
         return departamentoRepositorio.findAll();
     }
 
-    public Departamento buscarPorId(Integer id) {
-        return departamentoRepositorio.findById(id).orElse(null);
+    public List<Departamento> listarPorPais(Long paisId) {
+        return departamentoRepositorio.findByPaisId(paisId);
     }
 }
+

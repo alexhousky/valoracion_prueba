@@ -2,23 +2,29 @@ package com.example.fidelidad_api.services;
 
 import com.example.fidelidad_api.models.Ciudad;
 import com.example.fidelidad_api.repositories.CiudadRepositorio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class CiudadServicio {
-    private final CiudadRepositorio ciudadRepositorio;
 
-    public CiudadServicio(CiudadRepositorio ciudadRepositorio) {
-        this.ciudadRepositorio = ciudadRepositorio;
-    }
+    @Autowired
+    private CiudadRepositorio ciudadRepositorio;
 
-    public List<Ciudad> listarCiudades() {
+    public List<Ciudad> listarTodas() {
         return ciudadRepositorio.findAll();
     }
 
-    public Ciudad buscarPorId(Integer id) {
+    public Ciudad obtenerPorId(Long id) {
         return ciudadRepositorio.findById(id).orElse(null);
     }
+
+    public List<Ciudad> listarPorDepartamento(Long departamentoId) {
+        return ciudadRepositorio.findByDepartamentoId(departamentoId);
+    }
 }
+
+
+

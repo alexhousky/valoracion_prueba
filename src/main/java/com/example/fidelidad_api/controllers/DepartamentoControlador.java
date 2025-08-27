@@ -2,27 +2,29 @@ package com.example.fidelidad_api.controllers;
 
 import com.example.fidelidad_api.models.Departamento;
 import com.example.fidelidad_api.services.DepartamentoServicio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/departamentos")
-@CrossOrigin(origins = "*")
 public class DepartamentoControlador {
-    private final DepartamentoServicio departamentoServicio;
 
-    public DepartamentoControlador(DepartamentoServicio departamentoServicio) {
-        this.departamentoServicio= departamentoServicio;
-    }
+    @Autowired
+    private DepartamentoServicio departamentoServicio;
 
+    // ✅ Endpoint para listar TODOS los departamentos
     @GetMapping
-    public List<Departamento> listar() {
-        return departamentoServicio.listarDepartamentos();
+    public List<Departamento> listarTodos() {
+        return departamentoServicio.listarTodos();
     }
 
-    @GetMapping("/{id}")
-    public Departamento obtener(@PathVariable Integer id) {
-        return departamentoServicio.buscarPorId(id);
+    // ✅ Endpoint para listar por país
+    @GetMapping("/pais/{paisId}")
+    public List<Departamento> listarPorPais(@PathVariable Long paisId) {
+        return departamentoServicio.listarPorPais(paisId);
     }
 }
+
+

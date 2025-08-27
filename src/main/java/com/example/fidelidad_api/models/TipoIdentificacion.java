@@ -1,46 +1,31 @@
 package com.example.fidelidad_api.models;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "tipo_identificacion")
 public class TipoIdentificacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_identificacion")
-    private Long idIdentificacion;
+    private Long id;
 
-    @Column(name = "nombre_identificacion", nullable = false, length = 50)
-    private String nombreIdentificacion;
+    @Column(nullable = false, unique = true)
+    private String nombre;
 
-    // Relación con Clientes
-    @OneToMany(mappedBy = "tipoIdentificacion", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cliente> clientes;
-
-    // Getters y Setters
-    public Long getIdIdentificacion() {
-        return idIdentificacion;
+    // Getters y setters
+    public Long getId() {
+        return id;
     }
 
-    public void setIdIdentificacion(Long idIdentificacion) {
-        this.idIdentificacion = idIdentificacion;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getNombreIdentificacion() {
-        return nombreIdentificacion;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreIdentificacion(String nombreIdentificacion) {
-        this.nombreIdentificacion = nombreIdentificacion;
-    }
-
-    public List<Cliente> getClientes() {
-        return clientes;
-    }
-
-    public void setClientes(List<Cliente> clientes) {
-        this.clientes = clientes;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 }

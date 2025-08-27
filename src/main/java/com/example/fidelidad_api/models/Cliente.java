@@ -1,53 +1,51 @@
 package com.example.fidelidad_api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "clientes")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_clientes")
-    private Long idClientes;
+    private Long id;
 
-
-    @ManyToOne
-    @JoinColumn(name = "id_identificacion")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tipo_identificacion_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private TipoIdentificacion tipoIdentificacion;
 
-    @Column(unique = true, length = 20)
+    @Column(name = "numero_identificacion", nullable = false, unique = true, length = 20)
     private String numeroIdentificacion;
 
-    @Column(length = 100)
+    @Column(nullable = false, length = 100)
     private String nombres;
 
-    @Column(length = 100)
+    @Column(nullable = false, length = 100)
     private String apellidos;
 
-    @Column()
-    private LocalDate fecha_nacimiento;
+    @Column(name = "fecha_nacimiento", nullable = false)
+    private LocalDate fechaNacimiento;
 
     @Column(length = 150)
     private String direccion;
 
-    @ManyToOne
-    @JoinColumn(name = "ciudad_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ciudad_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Ciudad ciudad;
 
-    @ManyToOne
-    @JoinColumn(name = "marca_id")
-    private Marca marca;
+    // getters y setters...
 
-    // Getters y Setters
-
-    public Long getIdClientes() {
-        return idClientes;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdClientes(Long idClientes) {
-        this.idClientes = idClientes;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public TipoIdentificacion getTipoIdentificacion() {
@@ -82,12 +80,12 @@ public class Cliente {
         this.apellidos = apellidos;
     }
 
-    public LocalDate getFecha_nacimiento() {
-        return fecha_nacimiento;
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setFecha_nacimiento(LocalDate fecha_nacimiento) {
-        this.fecha_nacimiento = fecha_nacimiento;
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public String getDireccion() {
@@ -105,13 +103,4 @@ public class Cliente {
     public void setCiudad(Ciudad ciudad) {
         this.ciudad = ciudad;
     }
-
-    public Marca getMarca() {
-        return marca;
-    }
-
-    public void setMarca(Marca marca) {
-        this.marca = marca;
-    }
 }
-

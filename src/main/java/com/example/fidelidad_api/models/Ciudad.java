@@ -1,59 +1,43 @@
 package com.example.fidelidad_api.models;
 
 import jakarta.persistence.*;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "ciudades")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Ciudad {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_ciudad", columnDefinition = "BIGINT")
-    private Long idCiudad;
+    private Long id;
 
-    @Column(name = "nombre_ciudad", nullable = false, length = 100)
-    private String nombreCiudad;
+    @Column(nullable = false)
+    private String nombre;
 
-    // Relación con Departamento
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "departamento_id", nullable = false)
     private Departamento departamento;
 
-    // Relación con Clientes
-    @OneToMany(mappedBy = "ciudad", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cliente> clientes;
-
-    // Getters y Setters
-    public Long getIdCiudad() {
-        return idCiudad;
+    // Getters y setters
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setIdCiudad(Long idCiudad) {
-        this.idCiudad = idCiudad;
+    public String getNombre() {
+        return nombre;
     }
-
-    public String getNombreCiudad() {
-        return nombreCiudad;
-    }
-
-    public void setNombreCiudad(String nombreCiudad) {
-        this.nombreCiudad = nombreCiudad;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public Departamento getDepartamento() {
         return departamento;
     }
-
     public void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
-    }
-
-    public List<Cliente> getClientes() {
-        return clientes;
-    }
-
-    public void setClientes(List<Cliente> clientes) {
-        this.clientes = clientes;
     }
 }
