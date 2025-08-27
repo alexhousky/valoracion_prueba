@@ -16,7 +16,8 @@ public class CorsConfig {
                         .allowedOrigins("http://localhost:3000") // URL de tu frontend React
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
                         .allowedHeaders("*")
-                        .allowCredentials(true);
+                        .allowCredentials(false)
+                        .maxAge(3600);
             }
         };
     }

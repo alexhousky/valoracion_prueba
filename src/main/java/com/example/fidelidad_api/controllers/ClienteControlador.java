@@ -1,5 +1,6 @@
 package com.example.fidelidad_api.controllers;
 
+import com.example.fidelidad_api.dtos.ClienteDTO;
 import com.example.fidelidad_api.dtos.RegistroClienteDTO;
 import com.example.fidelidad_api.models.Ciudad;
 import com.example.fidelidad_api.models.Cliente;
@@ -29,14 +30,13 @@ public class ClienteControlador {
     @Autowired
     private CiudadServicio ciudadServicio;
 
-    // ✅ GET base para listar todos los clientes con manejo de errores
     @GetMapping
     public ResponseEntity<?> listarClientes() {
         try {
-            List<Cliente> clientes = clienteServicio.obtenerTodosLosClientes();
+            List<ClienteDTO> clientes = clienteServicio.obtenerClientesDTO();
             return ResponseEntity.ok(clientes);
         } catch (Exception e) {
-            e.printStackTrace(); // 🔍 Esto muestra la causa real en la consola
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al listar clientes: " + e.getMessage());
         }
@@ -57,8 +57,9 @@ public class ClienteControlador {
             cliente.setDireccion(dto.getDireccion());
             cliente.setCiudad(ciudad);
 
-            Cliente guardado = clienteServicio.guardarCliente(cliente);
-            return ResponseEntity.ok(guardado);
+            ClienteDTO guardadoDTO = clienteServicio.guardarClienteYRetornarDTO(cliente);
+            return ResponseEntity.status(HttpStatus.CREATED).body(guardadoDTO);
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -90,4 +91,3 @@ public class ClienteControlador {
         }
     }
 }
-
