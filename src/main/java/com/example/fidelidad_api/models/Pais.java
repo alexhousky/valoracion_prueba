@@ -12,7 +12,6 @@ public class Pais {
     @Column(nullable = false, unique = true)
     private String nombre;
 
-    // Getters y setters
     public Long getId() {
         return id;
     }

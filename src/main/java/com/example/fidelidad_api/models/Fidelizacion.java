@@ -4,49 +4,68 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(
-        name = "fidelizacion",
-        uniqueConstraints = @UniqueConstraint(name = "uk_fidelizacion_cliente_marca", columnNames = {"cliente_id", "marca_id"})
-)
+@Table(name = "fidelizacion", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"cliente_id", "marca_id"})
+})
 public class Fidelizacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id", nullable = false, foreignKey = @ForeignKey(name = "fk_fidelizacion_cliente"))
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "marca_id", nullable = false, foreignKey = @ForeignKey(name = "fk_fidelizacion_marca"))
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "marca_id")
     private Marca marca;
 
     @Column(name = "fecha_inicio", nullable = false)
     private LocalDate fechaInicio;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "estado", nullable = false, length = 20)
-    private EstadoFidelizacion estado = EstadoFidelizacion.ACTIVO;
+    @Column(name = "estado", nullable = false)
+    private String estado = "activo";
 
-    @PrePersist
-    public void prePersist() {
-        if (fechaInicio == null) {
-            fechaInicio = LocalDate.now();
-        }
-        if (estado == null) {
-            estado = EstadoFidelizacion.ACTIVO;
-        }
+    // Getters y Setters
+
+    public Long getId() {
+        return id;
     }
 
-    // Getters y setters
-    public Integer getId() { return id; }
-    public Cliente getCliente() { return cliente; }
-    public void setCliente(Cliente cliente) { this.cliente = cliente; }
-    public Marca getMarca() { return marca; }
-    public void setMarca(Marca marca) { this.marca = marca; }
-    public LocalDate getFechaInicio() { return fechaInicio; }
-    public void setFechaInicio(LocalDate fechaInicio) { this.fechaInicio = fechaInicio; }
-    public EstadoFidelizacion getEstado() { return estado; }
-    public void setEstado(EstadoFidelizacion estado) { this.estado = estado; }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
+
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 }
