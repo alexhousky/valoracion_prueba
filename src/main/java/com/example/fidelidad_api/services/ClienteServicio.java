@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClienteServicio {
@@ -14,47 +15,35 @@ public class ClienteServicio {
     @Autowired
     private ClienteRepositorio clienteRepositorio;
 
-    // Listar como entidad (si lo requieres internamente)
-    public List<Cliente> obtenerTodosLosClientes() {
-        return clienteRepositorio.findAll();
-    }
-
-    // Listar como DTO para API
-    public List<ClienteDTO> obtenerClientesDTO() {
-        List<Cliente> clientes = clienteRepositorio.findAll();
-        return clientes.stream()
-                .map(c -> new ClienteDTO(
-                        c.getId(),
-                        c.getNumeroIdentificacion(),
-                        c.getNombres(),
-                        c.getApellidos(),
-                        c.getTipoIdentificacion() != null ? c.getTipoIdentificacion().getNombre() : null,
-                        c.getCiudad() != null ? c.getCiudad().getNombre() : null
-                ))
-                .toList();
-    }
-
-    public Cliente guardarCliente(Cliente cliente) {
-        return clienteRepositorio.save(cliente);
-    }
-
     public ClienteDTO guardarClienteYRetornarDTO(Cliente cliente) {
         Cliente guardado = clienteRepositorio.save(cliente);
-        return new ClienteDTO(
-                guardado.getId(),
-                guardado.getNumeroIdentificacion(),
-                guardado.getNombres(),
-                guardado.getApellidos(),
-                guardado.getTipoIdentificacion() != null ? guardado.getTipoIdentificacion().getNombre() : null,
-                guardado.getCiudad() != null ? guardado.getCiudad().getNombre() : null
-        );
+        return convertirADTO(guardado);
+    }
+
+    public List<ClienteDTO> obtenerClientesDTO() {
+        return clienteRepositorio.findAll().stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
     }
 
     public Cliente obtenerClientePorId(Long id) {
-        return clienteRepositorio.findById(id).orElse(null);
+        return clienteRepositorio.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con id: " + id));
     }
 
     public void eliminarCliente(Long id) {
         clienteRepositorio.deleteById(id);
+    }
+
+    private ClienteDTO convertirADTO(Cliente cliente) {
+        return new ClienteDTO(
+                cliente.getId(),
+                cliente.getTipoIdentificacion().getNombre(),
+                cliente.getNumeroIdentificacion(),
+                cliente.getNombres(),
+                cliente.getApellidos(),
+                cliente.getCiudad().getNombre(),
+                cliente.getDireccion()
+        );
     }
 }

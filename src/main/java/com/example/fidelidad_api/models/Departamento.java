@@ -1,23 +1,24 @@
 package com.example.fidelidad_api.models;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "departamentos")
+@Table(name = "departamento")
 public class Departamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String nombre;
 
     @ManyToOne
-    @JoinColumn(name = "pais_id", nullable = false)
+    @JoinColumn(name = "pais_id")
     private Pais pais;
 
-    // Getters y setters
+    @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL)
+    private List<Ciudad> ciudades;
 
     public Long getId() {
         return id;
@@ -42,4 +43,13 @@ public class Departamento {
     public void setPais(Pais pais) {
         this.pais = pais;
     }
+
+    public List<Ciudad> getCiudades() {
+        return ciudades;
+    }
+
+    public void setCiudades(List<Ciudad> ciudades) {
+        this.ciudades = ciudades;
+    }
 }
+

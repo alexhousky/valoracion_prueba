@@ -1,13 +1,13 @@
 package com.example.fidelidad_api.controllers;
 
-import com.example.fidelidad_api.models.Pais;
+import com.example.fidelidad_api.dtos.PaisDTO;
 import com.example.fidelidad_api.services.PaisServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/paises")
 public class PaisControlador {
@@ -16,7 +16,7 @@ public class PaisControlador {
     private PaisServicio paisServicio;
 
     @GetMapping
-    public List<Pais> listarPaises() {
-        return paisServicio.listarTodos();
+    public ResponseEntity<List<PaisDTO>> listarPaises() {
+        return ResponseEntity.ok(paisServicio.listarTodos());
     }
 }

@@ -1,44 +1,31 @@
 package com.example.fidelidad_api.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "clientes")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "cliente")
 public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tipo_identificacion_id", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne
+    @JoinColumn(name = "tipo_identificacion_id")
     private TipoIdentificacion tipoIdentificacion;
 
-    @Column(name = "numero_identificacion", nullable = false, unique = true, length = 20)
     private String numeroIdentificacion;
-
-    @Column(nullable = false, length = 100)
     private String nombres;
-
-    @Column(nullable = false, length = 100)
     private String apellidos;
-
-    @Column(name = "fecha_nacimiento", nullable = false)
     private LocalDate fechaNacimiento;
-
-    @Column(length = 150)
     private String direccion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ciudad_id", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne
+    @JoinColumn(name = "ciudad_id")
     private Ciudad ciudad;
 
-    // getters y setters...
+    // Getters y setters
 
     public Long getId() {
         return id;
@@ -104,3 +91,4 @@ public class Cliente {
         this.ciudad = ciudad;
     }
 }
+

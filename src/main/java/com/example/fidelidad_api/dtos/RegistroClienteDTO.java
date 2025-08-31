@@ -2,36 +2,32 @@ package com.example.fidelidad_api.dtos;
 
 import jakarta.validation.constraints.*;
 
-
 import java.time.LocalDate;
 
 public class RegistroClienteDTO {
 
-    @NotNull(message = "El tipo de identificación es obligatorio")
+    @NotNull
     private Long tipoIdentificacionId;
 
-    @NotBlank(message = "El número de identificación es obligatorio")
-    @Size(max = 20, message = "El número de identificación no debe superar 20 caracteres")
+    @NotBlank
     private String numeroIdentificacion;
 
-    @NotBlank(message = "Los nombres son obligatorios")
-    @Size(max = 100)
+    @NotBlank
     private String nombres;
 
-    @NotBlank(message = "Los apellidos son obligatorios")
-    @Size(max = 100)
+    @NotBlank
     private String apellidos;
 
-    @NotNull(message = "La fecha de nacimiento es obligatoria")
+    @NotNull
     private LocalDate fechaNacimiento;
 
-    @Size(max = 150, message = "La dirección no debe superar 150 caracteres")
+    @NotBlank
     private String direccion;
 
-    @NotNull(message = "La ciudad es obligatoria")
+    @NotNull
     private Long ciudadId;
 
-
+    // Getters y setters
     public Long getTipoIdentificacionId() {
         return tipoIdentificacionId;
     }
