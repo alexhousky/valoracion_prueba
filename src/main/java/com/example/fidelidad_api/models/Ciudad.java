@@ -3,7 +3,7 @@ package com.example.fidelidad_api.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "ciudad")
+@Table(name = "ciudades")
 public class Ciudad {
 
     @Id

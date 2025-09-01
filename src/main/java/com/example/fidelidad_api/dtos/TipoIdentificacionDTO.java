@@ -4,7 +4,7 @@ public class TipoIdentificacionDTO {
     private Long id;
     private String nombre;
 
-    public TipoIdentificacionDTO() {}
+    // Constructor, getters y setters
 
     public TipoIdentificacionDTO(Long id, String nombre) {
         this.id = id;
@@ -15,15 +15,16 @@ public class TipoIdentificacionDTO {
         return id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 }
+
